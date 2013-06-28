@@ -45,6 +45,7 @@ class ZiWeiPaiPan(object):
         self._inputdata['ShengRi']=(1,2,3,4,5,6,7,8,9,10,
                                     11,12,13,14,15,16,17,18,19,20,
                                     21,22,23,24,25,26,27,28,29,30)
+        self._inputdata['XingBie']=(1,2)
         self._outputdata={}
 
     def loadConfig(self,cfile,filecode='cp936'):
@@ -75,11 +76,12 @@ class ZiWeiPaiPan(object):
         else:
             return defaultvalue
 
-def paipan(*cal):
+def paipan(gender,*cal):
     zw=ZiWeiPaiPan()
     l=lunar.Lunar()
     info=l.transCal(cal)
     zw.setParams(
+        XingBie=gender,
         ShengNianGan=(info[0][0]-1)%10+1,
         ShengNianZhi=(info[0][0]-1)%12+1,
         ShengYueGan=(info[0][1]-1)%10+1,
@@ -90,8 +92,8 @@ def paipan(*cal):
         ShengShiZhi=(info[0][3]-1)%12+1,
         ShengRi=info[1][2])
     for k,v in sorted(zw._data.iteritems()):
-        if (k in zw._outputdata) and ('Star0' in zw._outputdata[k]['tag']):
+        if k in zw._outputdata:
             print k,v
 
 if __name__=='__main__':
-    paipan(1983,9,2,12,47,0)
+    paipan(1,1983,9,2,12,47,0)

@@ -103,33 +103,39 @@ class RuleParser(object):
         p[0]='PNAME'
         self._pinfo[p[0]]=p[2]
     def p_tag(self,p):
-        '''tag : TAG ID
-               | tag ID'''
+        '''tag : TAG ids'''
         p[0]='PTAG'
-        if p[1]!='PTAG':
-            self._pinfo[p[0]]=[]
-        self._pinfo[p[0]].append(p[2])
+        self._pinfo[p[0]]=self._pinfo[p[2]]
     def p_input(self,p):
-        '''input : INPUT ID
-                 | input ID'''
+        '''input : INPUT ids'''
         p[0]='PINPUT'
-        if p[1]!='PINPUT':
-            self._pinfo[p[0]]=[]
-        self._pinfo[p[0]].append(p[2])
+        self._pinfo[p[0]]=self._pinfo[p[2]]
     def p_output(self,p):
-        '''output : OUTPUT NUMBER
-                  | output NUMBER'''
+        '''output : OUTPUT numbers
+                  | OUTPUT ids'''
         p[0]='POUTPUT'
-        if p[1]!='POUTPUT':
-            self._pinfo[p[0]]=[]
-        self._pinfo[p[0]].append(p[2])
+        self._pinfo[p[0]]=self._pinfo[p[2]]
     def p_data(self,p):
-        '''data : DATA NUMBER
-                | data NUMBER'''
+        '''data : DATA numbers
+                | DATA ids'''
         p[0]='PDATA'
-        if p[1]!='PDATA':
-            self._pinfo[p[0]]=[]
-        self._pinfo[p[0]].append(p[2])
+        self._pinfo[p[0]]=self._pinfo[p[2]]
+    def p_ids(self,p):
+        '''ids : ID
+               | ids ID'''
+        p[0]='PIDS'
+        if p[1]!='PIDS':
+            self._pinfo[p[0]]=[p[1],]
+        else:
+            self._pinfo[p[0]].append(p[2])
+    def p_numbers(self,p):
+        '''numbers : NUMBER
+                   | numbers NUMBER'''
+        p[0]='PNUMBERS'
+        if p[1]!='PNUMBERS':
+            self._pinfo[p[0]]=[p[1],]
+        else:
+            self._pinfo[p[0]].append(p[2])
     def p_error(self,p):
         self._log.critical("P_ERROR: "+str(p))
 
