@@ -91,9 +91,16 @@ def paipan(gender,*cal):
         ShengShiGan=(info[0][3]-1)%10+1,
         ShengShiZhi=(info[0][3]-1)%12+1,
         ShengRi=info[1][2])
+    outs={}
     for k,v in sorted(zw._data.iteritems()):
         if k in zw._outputdata:
-            print k,v
+            if zw._outputdata[k]['tag'] not in outs:
+                outs[zw._outputdata[k]['tag']]=[]
+            outs[zw._outputdata[k]['tag']].append((k,zw._outputdata[k]['name'],v))
+    for k,v in sorted(outs.iteritems()):
+        print k
+        for vi in sorted(v,key=lambda v:v[2]):
+            print "\t","\t".join([str(x) for x in vi[1:]])
 
 if __name__=='__main__':
     paipan(1,1983,9,2,12,47,0)
