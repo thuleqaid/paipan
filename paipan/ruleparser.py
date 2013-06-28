@@ -5,7 +5,7 @@ import logging
 class RuleParser(object):
     # tokens
     reserved = (
-            'TARGET','NAME','INPUT','OUTPUT','DATA')
+            'TARGET','NAME','INPUT','OUTPUT','DATA','TAG')
     tokens = reserved + (
         'COMMENT','NUMBER','ID','SCONST',
         )
@@ -82,14 +82,18 @@ class RuleParser(object):
     def p_rulefile(self,p):
         '''rulefile : item
                     | rulefile item'''
-    def p_item(self,p):
-        '''item : target input output data
-                | target name input output data
-                | COMMENT'''
-        if p[1]=='PTARGET':
-            self._result.append(self._pinfo)
-            self._log.debug(repr(self._pinfo))
+        self._result.append(self._pinfo)
+        self._log.debug(repr(self._pinfo))
         self.initstate()
+    def p_item(self,p):
+        '''item : target
+                | item name
+                | item tag
+                | item input
+                | item output
+                | item data
+                | item COMMENT'''
+        p[0]='PITEM'
     def p_target(self,p):
         '''target : TARGET ID'''
         p[0]='PTARGET'
@@ -98,6 +102,13 @@ class RuleParser(object):
         '''name : NAME SCONST'''
         p[0]='PNAME'
         self._pinfo[p[0]]=p[2]
+    def p_tag(self,p):
+        '''tag : TAG ID
+               | tag ID'''
+        p[0]='PTAG'
+        if p[1]!='PTAG':
+            self._pinfo[p[0]]=[]
+        self._pinfo[p[0]].append(p[2])
     def p_input(self,p):
         '''input : INPUT ID
                  | input ID'''
