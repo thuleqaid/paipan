@@ -1,6 +1,86 @@
 import math as Math
 
 class Lunar(object):
+    ## transform solar calendar into lunar calendar
+    # @param cal (year,month,day,hour,minute,seconds)
+    # @return ((ganzhi year,ganzhi month,ganzhi day,ganzhi hour),(lunar year,lunar month,lunar day,is leap month))
+    def transCal(self,cal):
+        ganzhi=[0 for x in range(4)]
+        info=self.getJieqiIndex(cal)
+        ganzhi[0]=(info[0]-1984)%60+1
+        ganzhi[1]=(info[1]+1)/2+2
+        ganzhi[2]=(cal[0]-1984)*5+int(Math.ceil((cal[0]-1984)/4.))+30
+        for x in range(cal[1]-1):
+            ganzhi[2]+=self.getDays(cal[0],x+1)
+        ganzhi[2]+=cal[2]
+        if cal[3]>22:
+            ganzhi[2]+=1
+            ganzhi[3]=1
+        else:
+            ganzhi[3]=(cal[3]+3)/2
+        ganzhi[2]=(ganzhi[2]-1)%60+1
+        tg=(ganzhi[0]-1)%5+1
+        ganzhi[1]+=(tg-1)*12
+        ganzhi[1]=(ganzhi[1]-1)%60+1
+        tg=(ganzhi[2]-1)%5+1
+        ganzhi[3]+=(tg-1)*12
+        ganzhi[3]=(ganzhi[3]-1)%60+1
+
+        lunar=self.getLunarCalIndex(cal[0:3])
+        outs=[]
+        outs.append(tuple(ganzhi))
+        outs.append(tuple(lunar[0:3])+tuple((lunar[4],)))
+        return tuple(outs)
+
+    ## get lunar months informations for specific solar year
+    # @param year YYYY
+    # @return ((lunar month,year,month,day,days of lunar month,is leap month),...)
+    def getLunarCalTime(self,year):
+        return self.calcLunarCal(year)
+
+    ## get lunar calendar from solar calendar
+    # @param cal (year,month,day)
+    # @return (lunar year,lunar month,lunar day,days of lunar month,is leap month)
+    def getLunarCalIndex(self,cal):
+        year=cal[0]
+        curday=(cal[0]*100+cal[1])*100+cal[2]
+        caltimes=self.getLunarCalTime(year)
+        calmin=(caltimes[0][1]*100+caltimes[0][2])*100+caltimes[0][3]
+        calmax=(caltimes[-1][1]*100+caltimes[-1][2])*100+caltimes[-1][3]+caltimes[-1][4]
+        if calmin>curday:
+            year-=1
+            caltimes=self.getLunarCalTime(year)
+        elif calmax<curday:
+            caltimes2=self.getLunarCalTime(year+1)
+            calmin2=(caltimes2[0][1]*100+caltimes2[0][2])*100+caltimes2[0][3]
+            if calmin2<=curday:
+                year+=1
+                caltimes=caltimes2
+        calindex=1
+        while calindex<len(caltimes):
+            calmin=(caltimes[calindex][1]*100+caltimes[calindex][2])*100+caltimes[calindex][3]
+            if calmin>curday:
+                calindex-=1
+                break
+            calindex+=1
+        else:
+            calindex-=1
+        if cal[1]==caltimes[calindex][2]:
+            day=cal[2]-caltimes[calindex][3]+1
+        else:
+            day=self.getDays(caltimes[calindex][1],caltimes[calindex][2])-caltimes[calindex][3]+1+cal[2]
+        outs=[]
+        outs.append(year)
+        outs.append(caltimes[calindex][0])
+        outs.append(day)
+        outs.append(caltimes[calindex][4])
+        outs.append(caltimes[calindex][5])
+        return tuple(outs)
+
+    ## get solar calendar of JieQi for specific solar year and index
+    # @param year YYYY
+    # @param index spring:1~6 summer:7~12 autumn:13~18 winter:19~24
+    # @return (year,month,day,hour,minute,seconds)
     def getJieQiTime(self,year,index):
         if 0<index<25:
             jd=365.2422*(year-2000)
@@ -9,6 +89,9 @@ class Lunar(object):
         else:
             return ()
 
+    ## get the latest JieQi index before given time
+    # @param cal (year,month,day,hour,minute,seconds)
+    # @return (year,index)
     def getJieqiIndex(self,cal):
         time=[0,0]
         q=[0.0 for x in range(2)]
@@ -60,7 +143,21 @@ class Lunar(object):
         else:
             return ()
 
-    def getLunarCal(self,year):
+    def getDays(self,year,month):
+        if month in (1,3,5,7,8,10,12):
+            days=31
+        elif month==2:
+            days=28
+            if year%100==0:
+                if year%400==0:
+                    days+=1
+            elif year%4==0:
+                days+=1
+        else:
+            days=30
+        return days
+
+    def calcLunarCal(self,year):
         t1=365.2422*(year-2000)-50
         zq=[]
         cnt=16
@@ -100,6 +197,7 @@ class Lunar(object):
             cal=self.setFromJD(hs[i]+Lunar.J2000+8/24.,True)
             outtemp=[]
             outtemp.append(yn[i])
+            outtemp.extend(cal[0:3])
             if C[i+1]-C[i]>29:
                 outtemp.append(30)
             else:
@@ -108,7 +206,6 @@ class Lunar(object):
                 outtemp.append(1)
             else:
                 outtemp.append(0)
-            outtemp.extend(cal[0:3])
             outs.append(tuple(outtemp))
             i+=1
             if yn[i]<=1:
@@ -309,20 +406,20 @@ class Lunar(object):
         sun[0] += Math.pi
         sun[1] = - sun[1]
         self.addGxc(t,sun)
-	if sunflag:
+        if sunflag:
             d=self.nutation(t)
             sun[0] += d[0]
             return self.rad2mrad(jiao - sun[0])
-	else:
-	    moon=self.moonCal(t)
-	    return self.rad2mrad(jiao-(moon-sun[0]))
+        else:
+            moon=self.moonCal(t)
+            return self.rad2mrad(jiao-(moon-sun[0]))
 
     def jiaoCal(self,t,jiao,sunflag=True):
         t1 = t
-	if sunflag:
+        if sunflag:
             t2 = t1 + 360
-	else:
-	    t2 = t1 + 25
+        else:
+            t2 = t1 + 25
         jiao = jiao * Math.pi / 180
         v1 = self.jiaoCai(t1, jiao, sunflag)
         v2 = self.jiaoCai(t2, jiao, sunflag)
@@ -426,21 +523,12 @@ class Lunar(object):
         t2=t1*t1
         t3=t2*t1
         t4=t3*t1
-        llr=[0.0 for x in range(3)]
-        llr[0]=(self.Mnn(MnnT,Lunar.M10)+self.Mnn(MnnT,Lunar.M11)*t1+self.Mnn(MnnT,Lunar.M12)*t2)/Lunar.rad
-        llr[1]=(self.Mnn(MnnT,Lunar.M20)+self.Mnn(MnnT,Lunar.M21)*t1)/Lunar.rad
-        llr[2]=(self.Mnn(MnnT,Lunar.M30)+self.Mnn(MnnT,Lunar.M31)*t1)*0.999999949827
-        llr[0]=llr[0]+Lunar.M1n[0]+Lunar.M1n[1]*t1+Lunar.M1n[2]*t2+Lunar.M1n[3]*t3+Lunar.M1n[4]*t4
-        llr[0]=self.rad2mrad(llr[0])
-        return self.addPrece(jd,llr[0])
+        llr=(self.Mnn(MnnT,Lunar.M10)+self.Mnn(MnnT,Lunar.M11)*t1+self.Mnn(MnnT,Lunar.M12)*t2)/Lunar.rad
+        llr=llr+Lunar.M1n[0]+Lunar.M1n[1]*t1+Lunar.M1n[2]*t2+Lunar.M1n[3]*t3+Lunar.M1n[4]*t4
+        llr=self.rad2mrad(llr)
+        return self.addPrece(jd,llr)
 
 if __name__=='__main__':
     d=Lunar()
-    test=d.getJieQiTime(2013,10)
-    #print test
-    test2=list(test)
-    test2[4]-=1
-    #print d.getJieqiIndex(test2)
-    test2[4]+=1
-    #print d.getJieqiIndex(test2)
-    print d.getLunarCal(2012)
+    print d.transCal((1983,9,2,12,47,0))
+    print d.getLunarCalTime(2012)
