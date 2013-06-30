@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import lunar
 import ruleparser
 
@@ -5,7 +6,9 @@ class HeLuoPaiPan(object):
     def __init__(self):
         self._lunar=lunar.Lunar()
         self.loadConfig('heluo_rule.txt')
+        self.loadKouJue('heluo_koujue.txt')
 
+    # public functions
     def setPerson(self,gender,*cal):
         info=self._lunar.transCal(cal)
         self.setParams(
@@ -20,6 +23,180 @@ class HeLuoPaiPan(object):
             ShengShiGan=(info[0][3]-1)%10+1,
             ShengShiZhi=(info[0][3]-1)%12+1,
             )
+        self.calcGua(*cal)
+
+    def getNianTime(self,age):
+        if ((self.getData('ShengNian')-1984)%10+1)==self.getData('ShengNianGan'):
+            year=self.getData('ShengNian')+age-1
+        else:
+            year=self.getData('ShengNian')-1+age-1
+        outs=[]
+        outs.append(self._lunar.getJieQiTime(year,1))
+        outs.append(self._lunar.getJieQiTime(year+1,1))
+        return tuple(outs)
+    def getYueTime(self,age,month):
+        if ((self.getData('ShengNian')-1984)%10+1)==self.getData('ShengNianGan'):
+            year=self.getData('ShengNian')+age-1
+        else:
+            year=self.getData('ShengNian')-1+age-1
+        index=((month-1)%12+1)*2-1
+        outs=[]
+        outs.append(self._lunar.getJieQiTime(year,index))
+        if index>22:
+            outs.append(self._lunar.getJieQiTime(year+1,1))
+        else:
+            outs.append(self._lunar.getJieQiTime(year,index+2))
+        return tuple(outs)
+    def getRiTime(self,age,month,day):
+        if ((self.getData('ShengNian')-1984)%10+1)==self.getData('ShengNianGan'):
+            year=self.getData('ShengNian')+age-1
+        else:
+            year=self.getData('ShengNian')-1+age-1
+        index=((month-1)%12+1)*2-1
+        outs=[]
+        tempout=list(self._lunar.getJieQiTime(year,index))
+        if day!=1:
+            tempout[3]=0
+            tempout[4]=0
+            tempout[5]=0
+        days=self._lunar.getDays(tempout[0],tempout[1])
+        if tempout[2]+day-1>days:
+            tempout[1]+=1
+            if tempout[1]>12:
+                tempout[0]+=1
+                tempout[1]=1
+            tempout[2]=tempout[2]+day-1-days
+        else:
+            tempout[2]=tempout[2]+day-1
+        outs.append(tuple(tempout))
+        tempout[3]=23
+        tempout[4]=59
+        tempout[5]=59
+        outs.append(tuple(tempout))
+        return tuple(outs)
+
+    def getXianTianYun(self):
+        gua=self.getData('Gua1')
+        yuantang=self.getData('YuanTang1')
+        yaocnt,yaosts=self.getBitSts(gua,6)
+        age=36+yaocnt*3
+        return (gua,yuantang,age)
+    def getHouTianYun(self):
+        gua=self.getData('Gua2')
+        yuantang=self.getData('YuanTang2')
+        yaocnt,yaosts=self.getBitSts(gua,6)
+        age=36+yaocnt*3
+        return (gua,yuantang,age)
+    def getDaYun(self,age):
+        if age<=0:
+            return (-1,-1,-1)
+        agecnt=age
+        # decide whether xian tian gua or hou tian gua?
+        info=self.getXianTianYun()
+        if agecnt>info[2]:
+            agecnt-=info[2]
+            info=self.getHouTianYun()
+            if agecnt>info[2]:
+                return (-1,-1,-1)
+        gua=info[0]
+        yuantang=info[1]
+        yaocnt,yaosts=self.getBitSts(gua,6)
+
+        # decide yao
+        for i in range(6):
+            index=i+yuantang
+            if index>6:
+                index-=6
+            if agecnt<=6+3*yaosts[index-1]:
+                break
+            else:
+                agecnt=agecnt-6-3*yaosts[index-1]
+        return (gua,index,agecnt)
+    def getNianYun(self,age):
+        gua,index,agecnt=self.getDaYun(age)
+        if index<0:
+            return(-1,-1)
+        yaocnt,yaosts=self.getBitSts(gua,6)
+        # get liu nian gua
+        if yaosts[index-1]==0:
+            index-=1
+            while agecnt>0:
+                index+=1
+                if index>6:
+                    index=1
+                gua=gua^(1<<(6-index))
+                agecnt-=1
+            yuantang=index
+        else:
+            yinyang=(self.getData('ShengNianGan')+(age-agecnt))%2
+            if yinyang!=1:
+                gua=gua^(1<<(6-index))
+            agecnt-=1
+            yuantang=index
+            if agecnt>0:
+                if index>3:
+                    gua=gua^(1<<(9-index))
+                    yuantang-=3
+                else:
+                    gua=gua^(1<<(3-index))
+                    yuantang+=3
+                agecnt-=1
+                index-=1
+                while agecnt>0:
+                    index+=1
+                    if index>6:
+                        index=1
+                    gua=gua^(1<<(6-index))
+                    agecnt-=1
+                    yuantang=index
+        return (gua,yuantang)
+    def getYueYun(self,age,month):
+        if not 1<=month<=12:
+            return (-1,-1)
+        gua,yao=self.getNianYun(age)
+        if yao<0:
+            return (-1,-1)
+        for i in range((month+1)/2):
+            yao+=1
+            if yao>6:
+                yao-=6
+            gua=gua^(1<<(6-yao))
+        if month%2==0:
+            if yao>3:
+                yao-=3
+            else:
+                yao+=3
+            gua=gua^(1<<(6-yao))
+        return (gua,yao)
+    def getRiYun(self,age,month,day):
+        if not 1<=day<=30:
+            return (-1,-1)
+        gua,yao=self.getYueYun(age,month)
+        if yao<0:
+            return (-1,-1)
+        yao=yao+1+(day-1)/6
+        if yao>6:
+            yao-=6
+        gua=gua^(1<<(6-yao))
+        yao=(day-1)%6+1
+        return (gua,yao)
+
+    def getData(self,datakey,defaultvalue=''):
+        if datakey in self._data:
+            return self._data[datakey]
+        else:
+            return defaultvalue
+
+    def getKouJue(self,gua,yao,prefix,surfix):
+        outs=""
+        if gua in self._koujue:
+            if yao<len(self._koujue[gua]):
+                for kj in self._koujue[gua][yao]:
+                    outs+=prefix+kj+surfix
+        return outs
+
+    # private functions
+    def calcGua(self,*cal):
         # calculate tianshu and dishu
         tianshu=self.getData('NianGanTianShu')+ \
                 self.getData('NianZhiTianShu')+ \
@@ -216,145 +393,21 @@ class HeLuoPaiPan(object):
         self._data['YuanTang1']=yuantang
         # calculate hou tian gua
         gua2=gua1^(1<<(6-yuantang))
-        if yuantang>3:
-            yuantang-=3
+        if (gua1 in (10,18,34)) and (yuantang in (5,6)):
+            # hou tian gua exception for gua 10,18 and 34
+            if self.getData['ShengYueZhi']%2==1:
+                if yuantang==5:
+                    yuantang=2
+                    gua2=(gua2>>3)+(gua2%8)*8
+            else:
+                if yuantang==6:
+                    yuantang=3
+                    gua2=(gua2>>3)+(gua2%8)*8
         else:
-            yuantang+=3
-        # ToDo: hou tian gua exception for gua 10,18 and 34
+            yuantang=(yuantang+2)%6+1
+            gua2=(gua2>>3)+(gua2%8)*8
         self._data['Gua2']=gua2
         self._data['YuanTang2']=yuantang
-
-    def getNianTime(self,age):
-        if ((self.getData('ShengNian')-1984)%10+1)==self.getData('ShengNianGan'):
-            year=self.getData('ShengNian')+age-1
-        else:
-            year=self.getData('ShengNian')-1+age-1
-        outs=[]
-        outs.append(self._lunar.getJieQiTime(year,1))
-        outs.append(self._lunar.getJieQiTime(year+1,1))
-        return tuple(outs)
-
-    def getYueTime(self,age,month):
-        if ((self.getData('ShengNian')-1984)%10+1)==self.getData('ShengNianGan'):
-            year=self.getData('ShengNian')+age-1
-        else:
-            year=self.getData('ShengNian')-1+age-1
-        index=month*2-1
-        outs=[]
-        outs.append(self._lunar.getJieQiTime(year,index))
-        if index>22:
-            outs.append(self._lunar.getJieQiTime(year+1,1))
-        else:
-            outs.append(self._lunar.getJieQiTime(year,index+2))
-        return tuple(outs)
-
-    def getRiTime(self,age,month,day):
-        if ((self.getData('ShengNian')-1984)%10+1)==self.getData('ShengNianGan'):
-            year=self.getData('ShengNian')+age-1
-        else:
-            year=self.getData('ShengNian')-1+age-1
-        index=month*2-1
-        outs=[]
-        tempout=list(self._lunar.getJieQiTime(year,index))
-        if day!=1:
-            tempout[3]=0
-            tempout[4]=0
-            tempout[5]=0
-        days=self._lunar.getDays(tempout[0],tempout[1])
-        if tempout[2]+day-1>days:
-            tempout[1]+=1
-            if tempout[1]>12:
-                tempout[0]+=1
-                tempout[1]=1
-            tempout[2]=tempout[2]+day-1-days
-        else:
-            tempout[2]=tempout[2]+day-1
-        outs.append(tuple(tempout))
-        tempout[3]=23
-        tempout[4]=59
-        tempout[5]=59
-        outs.append(tuple(tempout))
-        return tuple(outs)
-
-    def getNianYun(self,age):
-        agecnt=age
-        # decide whether xian tian gua or hou tian gua?
-        gua=self.getData('Gua1')
-        yuantang=self.getData('YuanTang1')
-        yaocnt,yaosts=self.getBitSts(gua,6)
-        if 36+yaocnt*3<agecnt:
-            agecnt=agecnt-36-yaocnt*3
-            gua=self.getData('Gua2')
-            yuantang=self.getData('YuanTang2')
-            yaocnt,yaosts=self.getBitSts(gua,6)
-            if 36+yaocnt*3<agecnt:
-                return ()
-        # decide yao
-        for i in range(6):
-            index=i+yuantang
-            if index>6:
-                index-=6
-            if agecnt<=6+3*yaosts[index-1]:
-                break
-            else:
-                agecnt=agecnt-6-3*yaosts[index-1]
-        # get liu nian gua
-        if yaosts[index-1]==0:
-            index-=1
-            while agecnt>0:
-                index+=1
-                if index>6:
-                    index=1
-                gua=gua^(1<<(6-index))
-                agecnt-=1
-            yuantang=index
-        else:
-            yinyang=(self.getData('ShengNianGan')+(age-agecnt))%2
-            if yinyang!=1:
-                gua=gua^(1<<(6-index))
-            agecnt-=1
-            yuantang=index
-            if agecnt>0:
-                if index>3:
-                    gua=gua^(1<<(9-index))
-                    yuantang-=3
-                else:
-                    gua=gua^(1<<(3-index))
-                    yuantang+=3
-                agecnt-=1
-                index-=1
-                while agecnt>0:
-                    index+=1
-                    if index>6:
-                        index=1
-                    gua=gua^(1<<(6-index))
-                    agecnt-=1
-                    yuantang=index
-        return (gua,yuantang)
-
-    def getYueYun(self,age,month):
-        gua,yao=self.getNianYun(age)
-        for i in range((month+1)/2):
-            yao+=1
-            if yao>6:
-                yao-=6
-            gua=gua^(1<<(6-yao))
-        if month%2==0:
-            if yao>3:
-                yao-=3
-            else:
-                yao+=3
-            gua=gua^(1<<(6-yao))
-        return (gua,yao)
-
-    def getRiYun(self,age,month,day):
-        gua,yao=self.getYueYun(age,month)
-        yao=yao+1+(day-1)/6
-        if yao>6:
-            yao-=6
-        gua=gua^(1<<(6-yao))
-        yao=(day-1)%6+1
-        return (gua,yao)
 
     def getBitSts(self,data,dlen):
         gua=data
@@ -367,7 +420,6 @@ class HeLuoPaiPan(object):
             gua=gua/2
         return yaocnt,tuple(yaosts)
 
-    # public functions
     def setParams(self,**kwargs):
         self.init_data()
         for k,v in kwargs.items():
@@ -376,13 +428,6 @@ class HeLuoPaiPan(object):
         for target in self._outputdata.keys():
             self._data[target]=self.calcData(target)
 
-    def getData(self,datakey,defaultvalue=''):
-        if datakey in self._data:
-            return self._data[datakey]
-        else:
-            return defaultvalue
-
-    # private functions
     def init_data(self):
         self._data={}
         self._data['ShengNianGan']=-1
@@ -422,6 +467,19 @@ class HeLuoPaiPan(object):
             else:
                 self._outputdata[target]['tag']=()
 
+    def loadKouJue(self,kfile,filecode='utf8'):
+        self._koujue={}
+        fh=open(kfile,'rU')
+        for line in fh.readlines():
+            line=line.strip().decode(filecode).encode('utf8')
+            key,value=line.split(',',1)
+            key=int(key)
+            self._koujue[key]=[]
+            parts=value.split(';')
+            for part in parts:
+                self._koujue[key].append(part.split(':'))
+        fh.close()
+
     def calcData(self,datakey,defaultvalue=''):
         if datakey in self._inputdata:
             if datakey in self._data:
@@ -435,11 +493,52 @@ class HeLuoPaiPan(object):
                 return defaultvalue
         else:
             return defaultvalue
+
+def printResult(hl,age,*months):
+    kwords=(u'先天运',u'后天运',u'大运',u'年运',u'月运',u'日运')
+    # 先天运/后天运
+    info=hl.getXianTianYun()
+    outs=kwords[0].encode('utf8')
+    if info[2]<age:
+        info=hl.getHouTianYun()
+        outs=kwords[1].encode('utf8')
+    outs+="\n"+hl.getKouJue(info[0],0,"\t","\n")
+    outs+=hl.getKouJue(info[0],info[1],"\t","\n")
+
+    # 大运
+    outs+=kwords[2].encode('utf8')
+    info=hl.getDaYun(age)
+    outs+="\n"+hl.getKouJue(info[0],0,"\t","\n")
+    outs+=hl.getKouJue(info[0],info[1],"\t","\n")
+
+    # 年运
+    outs+=kwords[3].encode('utf8')
+    infot=hl.getNianTime(age)
+    outs+="\t"+"/".join([str(x) for x in infot[0][0:3]])+"~"+"/".join([str(x) for x in infot[1][0:3]])
+    info=hl.getNianYun(age)
+    outs+="\n"+hl.getKouJue(info[0],0,"\t","\n")
+    outs+=hl.getKouJue(info[0],info[1],"\t","\n")
+
+    for month in months:
+        # 月运
+        outs+=kwords[4].encode('utf8')
+        infot=hl.getYueTime(age,month)
+        outs+="\t"+"/".join([str(x) for x in infot[0][0:3]])+"~"+"/".join([str(x) for x in infot[1][0:3]])
+        info=hl.getYueYun(age,month)
+        outs+="\n"+hl.getKouJue(info[0],0,"\t","\n")
+        outs+=hl.getKouJue(info[0],info[1],"\t","\n")
+
+        # 日运
+        outs+=kwords[5].encode('utf8')+"\n"
+        for i in range(30):
+            infot=hl.getRiTime(age,month,i+1)
+            outs+="\t"+"/".join([str(x) for x in infot[0][0:3]])
+            info=hl.getRiYun(age,month,i+1)
+            outs+="\n"+hl.getKouJue(info[0],0,"\t","\n")
+            outs+=hl.getKouJue(info[0],info[1],"\t","\n")
+    print outs
+
 if __name__ == '__main__':
     h=HeLuoPaiPan()
     h.setPerson(1,1983,9,2,13,15,0)
-    print h.getNianYun(27),h.getNianTime(27)
-    for i in range(12):
-        print "\t",h.getYueYun(27,i+1),h.getYueTime(27,i+1)
-        for j in range(30):
-            print "\t\t",h.getRiYun(27,i+1,j+1),h.getRiTime(27,i+1,j+1)
+    printResult(h,31,*range(1,13))
