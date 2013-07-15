@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
+import os.path
 import lunar
 import ruleparser
 
 class HeLuoPaiPan(object):
     def __init__(self):
+        dname=os.path.dirname(__file__)
         self._lunar=lunar.Lunar()
-        self.loadConfig('heluo_rule.txt')
-        self.loadKouJue('heluo_koujue.txt')
+        self.loadConfig(os.path.join(dname,'heluo_rule.txt'))
+        self.loadKouJue(os.path.join(dname,'heluo_koujue.txt'))
 
     # public functions
     def setPerson(self,gender,*cal):

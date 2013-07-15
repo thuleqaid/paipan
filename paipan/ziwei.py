@@ -1,9 +1,11 @@
+import os.path
 import ruleparser
 import lunar
 
 class ZiWeiPaiPan(object):
     def __init__(self):
-        self.loadConfig('ziwei_rule.txt')
+        dname=os.path.dirname(__file__)
+        self.loadConfig(os.path.join(dname,'ziwei_rule.txt'))
 
     # public functions
     def setParams(self,**kwargs):
