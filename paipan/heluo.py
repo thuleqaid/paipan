@@ -77,6 +77,55 @@ class HeLuoPaiPan(object):
         outs.append(tuple(tempout))
         return tuple(outs)
 
+    def getYuanQi(self):
+        gan=self.getData('ShengNianGan')
+        zhi=self.getData('ShengNianZhi')
+        gua=self.getData('Gua1')
+        tiandigua=(gua%8,gua/8)
+        yuanqi=[[-1,-1] for x in range(2)]
+        for tiandi in range(len(tiandigua)):
+            gua=tiandigua[tiandi]
+            if gua==0:
+                if gan in (2,10) or zhi in (8,9):
+                    yuanqi[tiandi][0]=gua
+                if gan in (1,9) or zhi in (11,12):
+                    yuanqi[tiandi][1]=gua
+            elif gua==1:
+                if gan in (3,) or zhi in (2,3):
+                    yuanqi[tiandi][0]=gua
+                if gan in (4,) or zhi in (10,):
+                    yuanqi[tiandi][1]=gua
+            elif gua==2:
+                if gan in (5,) or zhi in (1,):
+                    yuanqi[tiandi][0]=gua
+                if gan in (6,) or zhi in (7,):
+                    yuanqi[tiandi][1]=gua
+            elif gua==3:
+                if gan in (8,) or zhi in (5,6):
+                    yuanqi[tiandi][0]=gua
+                if gan in (7,) or zhi in (4,):
+                    yuanqi[tiandi][1]=gua
+            elif gua==4:
+                if gan in (7,) or zhi in (4,):
+                    yuanqi[tiandi][0]=gua
+                if gan in (8,) or zhi in (5,6):
+                    yuanqi[tiandi][1]=gua
+            elif gua==5:
+                if gan in (6,) or zhi in (7,):
+                    yuanqi[tiandi][0]=gua
+                if gan in (5,) or zhi in (1,):
+                    yuanqi[tiandi][1]=gua
+            elif gua==6:
+                if gan in (4,) or zhi in (10,):
+                    yuanqi[tiandi][0]=gua
+                if gan in (3,) or zhi in (2,3):
+                    yuanqi[tiandi][1]=gua
+            elif gua==7:
+                if gan in (1,9) or zhi in (11,12):
+                    yuanqi[tiandi][0]=gua
+                if gan in (2,10) or zhi in (8,9):
+                    yuanqi[tiandi][1]=gua
+        return tuple(yuanqi)
     def getXianTianYun(self):
         gua=self.getData('Gua1')
         yuantang=self.getData('YuanTang1')
