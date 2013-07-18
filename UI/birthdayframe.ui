@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BirthdayFrame</class>
+ <widget class="QFrame" name="BirthdayFrame">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>292</width>
+    <height>369</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Frame</string>
+  </property>
+  <property name="frameShape">
+   <enum>QFrame::StyledPanel</enum>
+  </property>
+  <property name="frameShadow">
+   <enum>QFrame::Raised</enum>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <property name="fieldGrowthPolicy">
+    <enum>QFormLayout::ExpandingFieldsGrow</enum>
+   </property>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Name</string>
+     </property>
+     <property name="buddy">
+      <cstring>edit_name</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="edit_name"/>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Gender</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QRadioButton" name="radio_male">
+        <property name="text">
+         <string>Male</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radio_female">
+        <property name="text">
+         <string>Female</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Birthday</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QCalendarWidget" name="calendar"/>
+      </item>
+      <item>
+       <widget class="QTimeEdit" name="time">
+        <property name="time">
+         <time>
+          <hour>12</hour>
+          <minute>0</minute>
+          <second>0</second>
+         </time>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>GroupBox</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="btnAdd">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>btnAdd</sender>
+   <signal>clicked()</signal>
+   <receiver>BirthdayFrame</receiver>
+   <slot>onBtnAdd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>154</x>
+     <y>343</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>287</x>
+     <y>295</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>time</sender>
+   <signal>timeChanged(QTime)</signal>
+   <receiver>BirthdayFrame</receiver>
+   <slot>onTimeChg(QTime)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>182</x>
+     <y>283</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>287</x>
+     <y>256</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>calendar</sender>
+   <signal>selectionChanged()</signal>
+   <receiver>BirthdayFrame</receiver>
+   <slot>onDateChg()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>251</x>
+     <y>177</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>287</x>
+     <y>176</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radio_male</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>BirthdayFrame</receiver>
+   <slot>onGenderToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>81</x>
+     <y>77</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>73</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radio_female</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>BirthdayFrame</receiver>
+   <slot>onGenderToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>196</x>
+     <y>82</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>287</x>
+     <y>55</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>edit_name</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>BirthdayFrame</receiver>
+   <slot>onNameChg(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>235</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>290</x>
+     <y>19</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onBtnAdd()</slot>
+  <slot>onTimeChg(QTime)</slot>
+  <slot>onDateChg()</slot>
+  <slot>onGenderToggled(bool)</slot>
+  <slot>onNameChg(QString)</slot>
+ </slots>
+</ui>
