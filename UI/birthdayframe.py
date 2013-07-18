@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import birthdayframe_ui
@@ -25,8 +26,9 @@ class BirthdayFrame(QFrame):
             self.ui.calendar.setSelectedDate(QDate(birth[0],birth[1],birth[2]))
             self.ui.time.setTime(QTime(birth[3],birth[4],birth[5]))
         else:
-            self.ui.calendar.setSelectedDate(QDate())
-            self.ui.time.setTime(QTime())
+            n=datetime.datetime.now()
+            self.ui.calendar.setSelectedDate(QDate(n.year,n.month,n.day))
+            self.ui.time.setTime(QTime(n.hour,n.minute,n.second))
         self._dirty=False
         self.ui.btnAdd.setEnabled(False)
     def data(self):
@@ -65,3 +67,10 @@ class BirthdayFrame(QFrame):
         self.ui.btnAdd.setEnabled(False)
         if self._funcadd:
             self._funcadd(self)
+    def onBtnNow(self):
+        n=datetime.datetime.now()
+        self.ui.calendar.setSelectedDate(QDate(n.year,n.month,n.day))
+        self.ui.time.setTime(QTime(n.hour,n.minute,n.second))
+        self._dirty=True
+        if self.ui.edit_name.text():
+            self.ui.btnAdd.setEnabled(True)

@@ -4,6 +4,7 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import heluoframe
 import birthdayframe
+import liuyaoppframe
 
 class TestHeLuoFrame(QDialog):
     def __init__(self,parent=None):
@@ -38,9 +39,24 @@ class TestBirthdayFrame(QDialog):
         outs+="%d-%d-%d %d:%d:%d"%info['birthday']
         print outs
 
+class TestLiuyaoPPFrame(QDialog):
+    def __init__(self,parent=None):
+        super(TestLiuyaoPPFrame,self).__init__(parent)
+        layout=QVBoxLayout()
+        frame=liuyaoppframe.LiuyaoPPFrame()
+        frame.setupUi()
+        frame.setCbPaipan(self.printdata)
+        layout.addWidget(frame)
+        self.setLayout(layout)
+        self.resize(640,480)
+    def printdata(self,frame):
+        info=frame.data()
+        print info
+
 if __name__ == '__main__':
     app=QApplication(sys.argv)
     #form=TestHeLuoFrame()
-    form=TestBirthdayFrame()
+    #form=TestBirthdayFrame()
+    form=TestLiuyaoPPFrame()
     form.show()
     app.exec_()

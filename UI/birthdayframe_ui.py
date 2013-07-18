@@ -2,7 +2,8 @@
 
 # Form implementation generated from reading ui file 'birthdayframe.ui'
 #
-# Created by: PyQt4 UI code generator 4.9.1
+# Created: Thu Jul 18 21:00:13 2013
+#      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,12 +12,21 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_BirthdayFrame(object):
     def setupUi(self, BirthdayFrame):
         BirthdayFrame.setObjectName(_fromUtf8("BirthdayFrame"))
-        BirthdayFrame.resize(292, 369)
+        BirthdayFrame.resize(260, 371)
         BirthdayFrame.setFrameShape(QtGui.QFrame.StyledPanel)
         BirthdayFrame.setFrameShadow(QtGui.QFrame.Raised)
         self.formLayout = QtGui.QFormLayout(BirthdayFrame)
@@ -48,14 +58,19 @@ class Ui_BirthdayFrame(object):
         self.calendar.setObjectName(_fromUtf8("calendar"))
         self.verticalLayout.addWidget(self.calendar)
         self.time = QtGui.QTimeEdit(self.groupBox_2)
+        self.time.setAlignment(QtCore.Qt.AlignCenter)
         self.time.setTime(QtCore.QTime(12, 0, 0))
         self.time.setObjectName(_fromUtf8("time"))
         self.verticalLayout.addWidget(self.time)
         self.formLayout.setWidget(2, QtGui.QFormLayout.SpanningRole, self.groupBox_2)
         self.groupBox_3 = QtGui.QGroupBox(BirthdayFrame)
+        self.groupBox_3.setTitle(_fromUtf8(""))
         self.groupBox_3.setObjectName(_fromUtf8("groupBox_3"))
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.groupBox_3)
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
+        self.btnNow = QtGui.QPushButton(self.groupBox_3)
+        self.btnNow.setObjectName(_fromUtf8("btnNow"))
+        self.horizontalLayout_2.addWidget(self.btnNow)
         self.btnAdd = QtGui.QPushButton(self.groupBox_3)
         self.btnAdd.setEnabled(False)
         self.btnAdd.setObjectName(_fromUtf8("btnAdd"))
@@ -70,15 +85,17 @@ class Ui_BirthdayFrame(object):
         QtCore.QObject.connect(self.radio_male, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), BirthdayFrame.onGenderToggled)
         QtCore.QObject.connect(self.radio_female, QtCore.SIGNAL(_fromUtf8("toggled(bool)")), BirthdayFrame.onGenderToggled)
         QtCore.QObject.connect(self.edit_name, QtCore.SIGNAL(_fromUtf8("textChanged(QString)")), BirthdayFrame.onNameChg)
+        QtCore.QObject.connect(self.btnNow, QtCore.SIGNAL(_fromUtf8("clicked()")), BirthdayFrame.onBtnNow)
         QtCore.QMetaObject.connectSlotsByName(BirthdayFrame)
 
     def retranslateUi(self, BirthdayFrame):
-        BirthdayFrame.setWindowTitle(QtGui.QApplication.translate("BirthdayFrame", "Frame", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("BirthdayFrame", "Name", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox.setTitle(QtGui.QApplication.translate("BirthdayFrame", "Gender", None, QtGui.QApplication.UnicodeUTF8))
-        self.radio_male.setText(QtGui.QApplication.translate("BirthdayFrame", "Male", None, QtGui.QApplication.UnicodeUTF8))
-        self.radio_female.setText(QtGui.QApplication.translate("BirthdayFrame", "Female", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_2.setTitle(QtGui.QApplication.translate("BirthdayFrame", "Birthday", None, QtGui.QApplication.UnicodeUTF8))
-        self.groupBox_3.setTitle(QtGui.QApplication.translate("BirthdayFrame", "GroupBox", None, QtGui.QApplication.UnicodeUTF8))
-        self.btnAdd.setText(QtGui.QApplication.translate("BirthdayFrame", "Add", None, QtGui.QApplication.UnicodeUTF8))
+        BirthdayFrame.setWindowTitle(_translate("BirthdayFrame", "Frame", None))
+        self.label.setText(_translate("BirthdayFrame", "Name", None))
+        self.groupBox.setTitle(_translate("BirthdayFrame", "Gender", None))
+        self.radio_male.setText(_translate("BirthdayFrame", "Male", None))
+        self.radio_female.setText(_translate("BirthdayFrame", "Female", None))
+        self.groupBox_2.setTitle(_translate("BirthdayFrame", "Birthday", None))
+        self.time.setDisplayFormat(_translate("BirthdayFrame", "hh:mm", None))
+        self.btnNow.setText(_translate("BirthdayFrame", "Current Time", None))
+        self.btnAdd.setText(_translate("BirthdayFrame", "Add", None))
 

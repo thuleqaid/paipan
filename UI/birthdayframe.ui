@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>292</width>
-    <height>369</height>
+    <width>260</width>
+    <height>371</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -73,12 +73,18 @@
       </item>
       <item>
        <widget class="QTimeEdit" name="time">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
         <property name="time">
          <time>
           <hour>12</hour>
           <minute>0</minute>
           <second>0</second>
          </time>
+        </property>
+        <property name="displayFormat">
+         <string>hh:mm</string>
         </property>
        </widget>
       </item>
@@ -88,9 +94,16 @@
    <item row="3" column="0" colspan="2">
     <widget class="QGroupBox" name="groupBox_3">
      <property name="title">
-      <string>GroupBox</string>
+      <string/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="btnNow">
+        <property name="text">
+         <string>Current Time</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QPushButton" name="btnAdd">
         <property name="enabled">
@@ -119,7 +132,7 @@
      <y>343</y>
     </hint>
     <hint type="destinationlabel">
-     <x>287</x>
+     <x>259</x>
      <y>295</y>
     </hint>
    </hints>
@@ -135,7 +148,7 @@
      <y>283</y>
     </hint>
     <hint type="destinationlabel">
-     <x>287</x>
+     <x>259</x>
      <y>256</y>
     </hint>
    </hints>
@@ -147,11 +160,11 @@
    <slot>onDateChg()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>251</x>
+     <x>237</x>
      <y>177</y>
     </hint>
     <hint type="destinationlabel">
-     <x>287</x>
+     <x>259</x>
      <y>176</y>
     </hint>
    </hints>
@@ -167,7 +180,7 @@
      <y>77</y>
     </hint>
     <hint type="destinationlabel">
-     <x>286</x>
+     <x>259</x>
      <y>73</y>
     </hint>
    </hints>
@@ -179,11 +192,11 @@
    <slot>onGenderToggled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>196</x>
-     <y>82</y>
+     <x>237</x>
+     <y>80</y>
     </hint>
     <hint type="destinationlabel">
-     <x>287</x>
+     <x>259</x>
      <y>55</y>
     </hint>
    </hints>
@@ -199,8 +212,24 @@
      <y>20</y>
     </hint>
     <hint type="destinationlabel">
-     <x>290</x>
+     <x>259</x>
      <y>19</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnNow</sender>
+   <signal>clicked()</signal>
+   <receiver>BirthdayFrame</receiver>
+   <slot>onBtnNow()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>58</x>
+     <y>338</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>255</x>
+     <y>329</y>
     </hint>
    </hints>
   </connection>
@@ -211,5 +240,6 @@
   <slot>onDateChg()</slot>
   <slot>onGenderToggled(bool)</slot>
   <slot>onNameChg(QString)</slot>
+  <slot>onBtnNow()</slot>
  </slots>
 </ui>
