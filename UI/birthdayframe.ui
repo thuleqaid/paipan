@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>260</width>
-    <height>371</height>
+    <width>562</width>
+    <height>369</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,91 +19,317 @@
   <property name="frameShadow">
    <enum>QFrame::Raised</enum>
   </property>
-  <layout class="QFormLayout" name="formLayout">
-   <property name="fieldGrowthPolicy">
-    <enum>QFormLayout::ExpandingFieldsGrow</enum>
-   </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="1">
+    <widget class="QGroupBox" name="groupBox_8">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QGroupBox" name="groupBox_4">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>2</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="title">
+         <string>Time</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>WatchTime</string>
+           </property>
+           <property name="buddy">
+            <cstring>edit_time1</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="edit_time1">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maxLength">
+            <number>20</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>CityAdjTime</string>
+           </property>
+           <property name="buddy">
+            <cstring>edit_time2</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>SolarAdjTime</string>
+           </property>
+           <property name="buddy">
+            <cstring>edit_time3</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="edit_time2">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maxLength">
+            <number>20</number>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="edit_time3">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maxLength">
+            <number>20</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_5">
+        <property name="title">
+         <string>Location</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="0">
+          <widget class="QRadioButton" name="radio_lu">
+           <property name="text">
+            <string>Unknown</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QRadioButton" name="radio_ll">
+           <property name="text">
+            <string>Longitute</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QRadioButton" name="radio_lc">
+           <property name="text">
+            <string>City</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="combo_p">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="combo_c">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="edit_lon">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>120.0</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="groupBox_7">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>3</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="title">
+         <string>Gender</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QRadioButton" name="radio_male">
+           <property name="text">
+            <string>Male</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="radio_female">
+           <property name="text">
+            <string>Female</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="title">
+         <string>Birthday</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="1" column="0">
+          <widget class="QTimeEdit" name="time">
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="time">
+            <time>
+             <hour>12</hour>
+             <minute>0</minute>
+             <second>0</second>
+            </time>
+           </property>
+           <property name="displayFormat">
+            <string>hh:mm:ss</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="btnNow">
+           <property name="text">
+            <string>Current Time</string>
+           </property>
+           <property name="default">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QCalendarWidget" name="calendar"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Name</string>
+    <widget class="QGroupBox" name="groupBox_6">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <property name="buddy">
-      <cstring>edit_name</cstring>
+     <property name="title">
+      <string/>
      </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>3</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Name</string>
+        </property>
+        <property name="buddy">
+         <cstring>edit_name</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="edit_name">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>2</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QLineEdit" name="edit_name"/>
-   </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>Gender</string>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QRadioButton" name="radio_male">
-        <property name="text">
-         <string>Male</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="radio_female">
-        <property name="text">
-         <string>Female</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="title">
-      <string>Birthday</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QCalendarWidget" name="calendar"/>
-      </item>
-      <item>
-       <widget class="QTimeEdit" name="time">
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <property name="time">
-         <time>
-          <hour>12</hour>
-          <minute>0</minute>
-          <second>0</second>
-         </time>
-        </property>
-        <property name="displayFormat">
-         <string>hh:mm</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="2">
     <widget class="QGroupBox" name="groupBox_3">
      <property name="title">
       <string/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QPushButton" name="btnNow">
-        <property name="text">
-         <string>Current Time</string>
-        </property>
-       </widget>
-      </item>
       <item>
        <widget class="QPushButton" name="btnAdd">
         <property name="enabled">
@@ -114,11 +340,48 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="btnUpdate">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Update</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnDelete">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Delete</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>edit_name</tabstop>
+  <tabstop>radio_male</tabstop>
+  <tabstop>radio_female</tabstop>
+  <tabstop>calendar</tabstop>
+  <tabstop>time</tabstop>
+  <tabstop>radio_lu</tabstop>
+  <tabstop>radio_ll</tabstop>
+  <tabstop>edit_lon</tabstop>
+  <tabstop>radio_lc</tabstop>
+  <tabstop>combo_p</tabstop>
+  <tabstop>combo_c</tabstop>
+  <tabstop>btnAdd</tabstop>
+  <tabstop>edit_time1</tabstop>
+  <tabstop>edit_time2</tabstop>
+  <tabstop>edit_time3</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -128,8 +391,8 @@
    <slot>onBtnAdd()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>154</x>
-     <y>343</y>
+     <x>368</x>
+     <y>45</y>
     </hint>
     <hint type="destinationlabel">
      <x>259</x>
@@ -144,8 +407,8 @@
    <slot>onTimeChg(QTime)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>182</x>
-     <y>283</y>
+     <x>140</x>
+     <y>330</y>
     </hint>
     <hint type="destinationlabel">
      <x>259</x>
@@ -176,8 +439,8 @@
    <slot>onGenderToggled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>81</x>
-     <y>77</y>
+     <x>114</x>
+     <y>117</y>
     </hint>
     <hint type="destinationlabel">
      <x>259</x>
@@ -192,8 +455,8 @@
    <slot>onGenderToggled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>237</x>
-     <y>80</y>
+     <x>248</x>
+     <y>117</y>
     </hint>
     <hint type="destinationlabel">
      <x>259</x>
@@ -208,8 +471,8 @@
    <slot>onNameChg(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>235</x>
-     <y>20</y>
+     <x>259</x>
+     <y>43</y>
     </hint>
     <hint type="destinationlabel">
      <x>259</x>
@@ -224,12 +487,140 @@
    <slot>onBtnNow()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>58</x>
-     <y>338</y>
+     <x>205</x>
+     <y>333</y>
     </hint>
     <hint type="destinationlabel">
      <x>255</x>
      <y>329</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radio_lu</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>BirthdayFrame</receiver>
+   <slot>onLocToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>370</x>
+     <y>244</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>547</x>
+     <y>236</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radio_ll</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>BirthdayFrame</receiver>
+   <slot>onLocToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>336</x>
+     <y>273</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>548</x>
+     <y>271</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radio_lc</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>BirthdayFrame</receiver>
+   <slot>onLocToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>332</x>
+     <y>300</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>548</x>
+     <y>317</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>combo_p</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>BirthdayFrame</receiver>
+   <slot>onProvinceChg(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>467</x>
+     <y>302</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>549</x>
+     <y>214</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>combo_c</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>BirthdayFrame</receiver>
+   <slot>onCityChg(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>493</x>
+     <y>325</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>548</x>
+     <y>354</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>edit_lon</sender>
+   <signal>editingFinished()</signal>
+   <receiver>BirthdayFrame</receiver>
+   <slot>onEditLonFinish()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>436</x>
+     <y>270</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>549</x>
+     <y>183</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnUpdate</sender>
+   <signal>clicked()</signal>
+   <receiver>BirthdayFrame</receiver>
+   <slot>onBtnUpdate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>412</x>
+     <y>35</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>552</x>
+     <y>34</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnDelete</sender>
+   <signal>clicked()</signal>
+   <receiver>BirthdayFrame</receiver>
+   <slot>onBtnDelete()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>496</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>555</x>
+     <y>79</y>
     </hint>
    </hints>
   </connection>
@@ -241,5 +632,11 @@
   <slot>onGenderToggled(bool)</slot>
   <slot>onNameChg(QString)</slot>
   <slot>onBtnNow()</slot>
+  <slot>onLocToggled(bool)</slot>
+  <slot>onProvinceChg(int)</slot>
+  <slot>onCityChg(int)</slot>
+  <slot>onEditLonFinish()</slot>
+  <slot>onBtnUpdate()</slot>
+  <slot>onBtnDelete()</slot>
  </slots>
 </ui>

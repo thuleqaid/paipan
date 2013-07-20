@@ -344,7 +344,7 @@ class HeLuoPaiPan(object):
                         yuantang=i+1
                         break
             else:
-                shzhi-=yaocnt*2
+                shizhi-=yaocnt*2
                 for i in range(6):
                     if yaosts[i]!=yinyang:
                         shizhi-=1
@@ -365,7 +365,7 @@ class HeLuoPaiPan(object):
                     if yaosts[i]!=yinyang:
                         shizhi-=1
                     if shizhi<=0:
-                        yuangtang=i+1
+                        yuantang=i+1
                         break
         else:
             if gua1==63:
