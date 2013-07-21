@@ -81,8 +81,9 @@ class HeLuoPaiPan(object):
         gan=self.getData('ShengNianGan')
         zhi=self.getData('ShengNianZhi')
         gua=self.getData('Gua1')
-        tiandigua=(gua%8,gua/8)
-        yuanqi=[[-1,-1] for x in range(2)]
+        gua2=self.getData('Gua2')
+        tiandigua=(gua%8,gua/8,gua2%8,gua2/8)
+        yuanqi=[[-1,-1] for x in range(4)]
         for tiandi in range(len(tiandigua)):
             gua=tiandigua[tiandi]
             if gua==0:

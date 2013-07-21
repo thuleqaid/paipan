@@ -62,8 +62,29 @@ class HeluoFrame(QFrame):
         outs+=self.heluo.getKouJue(info[0],0,"","\n")
         self.ui.textEdit.setText(outs.decode('utf8'))
     def updateHouTianYun(self):
+        strs=(u'天',u'地',u'元气',u'反')
+        koujue=(u'坤反，主贫',
+                u'艮反，多痈疽气塞',
+                u'坎反，多聋闭不聪',
+                u'巽反，多痼疾',
+                u'震反，多跛',
+                u'离反，多瞽目受病',
+                u'兑反，多唇舌抬祸',
+                u'乾反，主夭')
+        info=self.heluo.getYuanQi()
+        outs=''
+        if info[2][0]>=0:
+            outs+=strs[0].encode('utf8')+strs[2].encode('utf8')+"\n"
+        if info[2][1]>=0:
+            outs+=strs[0].encode('utf8')+strs[3].encode('utf8')+strs[2].encode('utf8')+"  "
+            outs+=koujue[info[0][1]].encode('utf8')+"\n"
+        if info[3][0]>=0:
+            outs+=strs[1].encode('utf8')+strs[2].encode('utf8')+"\n"
+        if info[3][1]>=0:
+            outs+=strs[1].encode('utf8')+strs[3].encode('utf8')+strs[2].encode('utf8')+"  "
+            outs+=koujue[info[1][1]].encode('utf8')+"\n"
         info=self.heluo.getHouTianYun()
-        outs=self.heluo.getKouJue(info[0],0,"","\n")
+        outs+=self.heluo.getKouJue(info[0],0,"","\n")
         self.ui.textEdit.setText(outs.decode('utf8'))
     def updateDaYun(self,age):
         info=self.heluo.getDaYun(age)
