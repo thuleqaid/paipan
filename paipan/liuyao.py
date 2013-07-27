@@ -15,18 +15,18 @@ class LiuYaoPaiPan(object):
                    (16,26,36,46,56,6),
                    (54,4,14,24,34,44),
                    (1,51,41,19,9,59))
-    Str_LiuQin=('兄','官','孙','父','财')# index=(base_wx-target_wx)%5
-    Str_LiuSheng=('青龙','朱雀','勾陈','滕蛇','白虎','玄武')
-    Str_DiZhi=('子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥')
-    Str_Others=('年','月','日','时','空','应')
-    Str_Gua=('坤','艮','坎','巽','震','离','兑','乾')
+    Str_LiuQin=(u'兄',u'官',u'孙',u'父',u'财')# index=(base_wx-target_wx)%5
+    Str_LiuSheng=(u'青龙',u'朱雀',u'勾陈',u'滕蛇',u'白虎',u'玄武')
+    Str_DiZhi=(u'子',u'丑',u'寅',u'卯',u'辰',u'巳',u'午',u'未',u'申',u'酉',u'戌',u'亥')
+    Str_Others=(u'年',u'月',u'日',u'时',u'空',u'应')
+    Str_Gua=(u'坤',u'艮',u'坎',u'巽',u'震',u'离',u'兑',u'乾')
 
     def __init__(self):
         self._lunar=lunar.Lunar()
 
     def getGuaNoFromNumber(self,num1,num2,num3):
-        num1=LiuYaoPaiPan.Tbl_Gua[(num1-1)%8+1]
-        num2=LiuYaoPaiPan.Tbl_Gua[(num2-1)%8+1]
+        num1=(num1-1)%8+1
+        num2=(num2-1)%8+1
         num3=(num3-1)%6+1
         return (num1,num2,num3)
     def getGuaNoFromTongQian(self,tongqian):
@@ -38,7 +38,12 @@ class LiuYaoPaiPan(object):
             gua=(gua<<1)+(tongqian[i]%2)
             if tongqian[i]%4 in (0,3):
                 yao.append(i+1)
-        return (gua%8,gua/8)+tuple(yao)
+        for k,v in LiuYaoPaiPan.Tbl_Gua.items():
+            if v==gua%8:
+                gua1=k
+            if v==gua/8:
+                gua2=k
+        return (gua1,gua2)+tuple(yao)
     def paipanGZ(self,yuezhi,rigan,rizhi,gua):
         # Gua
         gua1=LiuYaoPaiPan.Tbl_Gua[gua[0]]+LiuYaoPaiPan.Tbl_Gua[gua[1]]*8
@@ -47,9 +52,9 @@ class LiuYaoPaiPan(object):
             gua2=gua2^(1<<(6-yao))
         # KongWang
         kong=(rizhi+(10-rigan))%12+1
-        self.setParams(YueZhi=(info[0][1]-1)%12+1,
-                       RiGan=(info[0][2]-1)%10+1,
-                       RiZhi=(info[0][2]-1)%12+1,
+        self.setParams(YueZhi=yuezhi,
+                       RiGan=rigan,
+                       RiZhi=rizhi,
                        KongWang=(kong,kong+1),
                        Gua1=gua1,
                        Gua2=gua2)
@@ -66,7 +71,7 @@ class LiuYaoPaiPan(object):
         for yao in gua[2:]:
             gua2=gua2^(1<<(6-yao))
         # KongWang
-        kong=(info[0][2]+9)/10*10+1
+        kong=13-(info[0][2]+9)/10*2
         self.setParams(NianGan=(info[0][0]-1)%10+1,
                        NianZhi=(info[0][0]-1)%12+1,
                        YueGan=(info[0][1]-1)%10+1,
@@ -124,12 +129,12 @@ class LiuYaoPaiPan(object):
         if zhi:
             outs+="%s%s%s "%(LiuYaoPaiPan.Str_DiZhi[zhi-1],LiuYaoPaiPan.Str_Others[0],LiuYaoPaiPan.Str_LiuQin[(gongwx-LiuYaoPaiPan.Tbl_WXZhi[zhi-1])%5])
         zhi=self.getData('YueZhi')
-        outs+="%s%s%s "%(LiuYaoPaiPan.Str_DiZhi[zhi-1],LiuYaoPaiPan.Str_Others[0],LiuYaoPaiPan.Str_LiuQin[(gongwx-LiuYaoPaiPan.Tbl_WXZhi[zhi-1])%5])
+        outs+="%s%s%s "%(LiuYaoPaiPan.Str_DiZhi[zhi-1],LiuYaoPaiPan.Str_Others[1],LiuYaoPaiPan.Str_LiuQin[(gongwx-LiuYaoPaiPan.Tbl_WXZhi[zhi-1])%5])
         zhi=self.getData('RiZhi')
-        outs+="%s%s%s "%(LiuYaoPaiPan.Str_DiZhi[zhi-1],LiuYaoPaiPan.Str_Others[0],LiuYaoPaiPan.Str_LiuQin[(gongwx-LiuYaoPaiPan.Tbl_WXZhi[zhi-1])%5])
+        outs+="%s%s%s "%(LiuYaoPaiPan.Str_DiZhi[zhi-1],LiuYaoPaiPan.Str_Others[2],LiuYaoPaiPan.Str_LiuQin[(gongwx-LiuYaoPaiPan.Tbl_WXZhi[zhi-1])%5])
         zhi=self.getData('ShiZhi')
         if zhi:
-            outs+="%s%s%s "%(LiuYaoPaiPan.Str_DiZhi[zhi-1],LiuYaoPaiPan.Str_Others[0],LiuYaoPaiPan.Str_LiuQin[(gongwx-LiuYaoPaiPan.Tbl_WXZhi[zhi-1])%5])
+            outs+="%s%s%s "%(LiuYaoPaiPan.Str_DiZhi[zhi-1],LiuYaoPaiPan.Str_Others[3],LiuYaoPaiPan.Str_LiuQin[(gongwx-LiuYaoPaiPan.Tbl_WXZhi[zhi-1])%5])
         kong=self.getData('KongWang')
         outs+="%s:%s%s"%(LiuYaoPaiPan.Str_Others[4],LiuYaoPaiPan.Str_DiZhi[kong[0]-1],LiuYaoPaiPan.Str_DiZhi[kong[1]-1])
         outs+=" "+guano+"\n"

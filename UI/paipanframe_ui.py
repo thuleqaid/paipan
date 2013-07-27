@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'paipanframe.ui'
 #
-# Created: Sun Jul 21 00:03:06 2013
+# Created: Sat Jul 27 07:07:47 2013
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -110,10 +110,10 @@ class Ui_PaipanFrame(object):
 
     def retranslateUi(self, PaipanFrame):
         PaipanFrame.setWindowTitle(_translate("PaipanFrame", "Frame", None))
-        self.radio_time1.setText(_translate("PaipanFrame", "WatchTime", None))
-        self.radio_time2.setText(_translate("PaipanFrame", "CityAdjTime", None))
-        self.radio_time3.setText(_translate("PaipanFrame", "SolarAdjTime", None))
-        self.radio_modeb.setText(_translate("PaipanFrame", "Bazi", None))
-        self.radio_modeh.setText(_translate("PaipanFrame", "Heluo", None))
-        self.radio_modez.setText(_translate("PaipanFrame", "ZiWei", None))
+        self.radio_time1.setText(_translate("PaipanFrame", "手表时", None))
+        self.radio_time2.setText(_translate("PaipanFrame", "平太阳时", None))
+        self.radio_time3.setText(_translate("PaipanFrame", "真太阳时", None))
+        self.radio_modeb.setText(_translate("PaipanFrame", "八字", None))
+        self.radio_modeh.setText(_translate("PaipanFrame", "河洛", None))
+        self.radio_modez.setText(_translate("PaipanFrame", "紫微", None))
 

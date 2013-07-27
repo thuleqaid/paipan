@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'birthdayframe.ui'
 #
-# Created: Sat Jul 20 23:42:02 2013
+# Created: Sat Jul 27 07:04:18 2013
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_BirthdayFrame(object):
     def setupUi(self, BirthdayFrame):
         BirthdayFrame.setObjectName(_fromUtf8("BirthdayFrame"))
-        BirthdayFrame.resize(562, 369)
+        BirthdayFrame.resize(562, 373)
         BirthdayFrame.setFrameShape(QtGui.QFrame.StyledPanel)
         BirthdayFrame.setFrameShadow(QtGui.QFrame.Raised)
         self.gridLayout = QtGui.QGridLayout(BirthdayFrame)
@@ -242,23 +242,23 @@ class Ui_BirthdayFrame(object):
 
     def retranslateUi(self, BirthdayFrame):
         BirthdayFrame.setWindowTitle(_translate("BirthdayFrame", "Frame", None))
-        self.groupBox_4.setTitle(_translate("BirthdayFrame", "Time", None))
-        self.label_2.setText(_translate("BirthdayFrame", "WatchTime", None))
-        self.label_3.setText(_translate("BirthdayFrame", "CityAdjTime", None))
-        self.label_4.setText(_translate("BirthdayFrame", "SolarAdjTime", None))
-        self.groupBox_5.setTitle(_translate("BirthdayFrame", "Location", None))
-        self.radio_lu.setText(_translate("BirthdayFrame", "Unknown", None))
-        self.radio_ll.setText(_translate("BirthdayFrame", "Longitute", None))
-        self.radio_lc.setText(_translate("BirthdayFrame", "City", None))
+        self.groupBox_4.setTitle(_translate("BirthdayFrame", "时间修正", None))
+        self.label_2.setText(_translate("BirthdayFrame", "手表时", None))
+        self.label_3.setText(_translate("BirthdayFrame", "平太阳时", None))
+        self.label_4.setText(_translate("BirthdayFrame", "真太阳时", None))
+        self.groupBox_5.setTitle(_translate("BirthdayFrame", "出生地", None))
+        self.radio_lu.setText(_translate("BirthdayFrame", "未知", None))
+        self.radio_ll.setText(_translate("BirthdayFrame", "经度", None))
+        self.radio_lc.setText(_translate("BirthdayFrame", "城市", None))
         self.edit_lon.setText(_translate("BirthdayFrame", "120.0", None))
-        self.groupBox.setTitle(_translate("BirthdayFrame", "Gender", None))
-        self.radio_male.setText(_translate("BirthdayFrame", "Male", None))
-        self.radio_female.setText(_translate("BirthdayFrame", "Female", None))
-        self.groupBox_2.setTitle(_translate("BirthdayFrame", "Birthday", None))
+        self.groupBox.setTitle(_translate("BirthdayFrame", "性别", None))
+        self.radio_male.setText(_translate("BirthdayFrame", "男", None))
+        self.radio_female.setText(_translate("BirthdayFrame", "女", None))
+        self.groupBox_2.setTitle(_translate("BirthdayFrame", "生日", None))
         self.time.setDisplayFormat(_translate("BirthdayFrame", "hh:mm:ss", None))
-        self.btnNow.setText(_translate("BirthdayFrame", "Current Time", None))
-        self.label.setText(_translate("BirthdayFrame", "Name", None))
-        self.btnAdd.setText(_translate("BirthdayFrame", "Add", None))
-        self.btnUpdate.setText(_translate("BirthdayFrame", "Update", None))
-        self.btnDelete.setText(_translate("BirthdayFrame", "Delete", None))
+        self.btnNow.setText(_translate("BirthdayFrame", "当前时间", None))
+        self.label.setText(_translate("BirthdayFrame", "姓名", None))
+        self.btnAdd.setText(_translate("BirthdayFrame", "新增记录", None))
+        self.btnUpdate.setText(_translate("BirthdayFrame", "更新记录", None))
+        self.btnDelete.setText(_translate("BirthdayFrame", "删除记录", None))
 

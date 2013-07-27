@@ -73,7 +73,7 @@
       <item>
        <widget class="QRadioButton" name="radio_time1">
         <property name="text">
-         <string>WatchTime</string>
+         <string>手表时</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -83,14 +83,14 @@
       <item>
        <widget class="QRadioButton" name="radio_time2">
         <property name="text">
-         <string>CityAdjTime</string>
+         <string>平太阳时</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QRadioButton" name="radio_time3">
         <property name="text">
-         <string>SolarAdjTime</string>
+         <string>真太阳时</string>
         </property>
        </widget>
       </item>
@@ -112,14 +112,14 @@
       <item>
        <widget class="QRadioButton" name="radio_modeb">
         <property name="text">
-         <string>Bazi</string>
+         <string>八字</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QRadioButton" name="radio_modeh">
         <property name="text">
-         <string>Heluo</string>
+         <string>河洛</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -129,7 +129,7 @@
       <item>
        <widget class="QRadioButton" name="radio_modez">
         <property name="text">
-         <string>ZiWei</string>
+         <string>紫微</string>
         </property>
        </widget>
       </item>

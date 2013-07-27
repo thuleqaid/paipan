@@ -6,6 +6,7 @@ import heluoframe
 import birthdayframe
 import liuyaoppframe
 import paipanframe
+import liuyaoframe
 
 class TestHeLuoFrame(QDialog):
     def __init__(self,parent=None):
@@ -54,6 +55,16 @@ class TestLiuyaoPPFrame(QDialog):
         info=frame.data()
         print info
 
+class TestLiuyaoFrame(QDialog):
+    def __init__(self,parent=None):
+        super(TestLiuyaoFrame,self).__init__(parent)
+        layout=QVBoxLayout()
+        frame=liuyaoframe.LiuyaoFrame()
+        frame.setupUi()
+        layout.addWidget(frame)
+        self.setLayout(layout)
+        self.resize(640,480)
+
 class TestPaipanFrame(QDialog):
     def __init__(self,parent=None):
         super(TestPaipanFrame,self).__init__(parent)
@@ -68,7 +79,8 @@ if __name__ == '__main__':
     app=QApplication(sys.argv)
     #form=TestHeLuoFrame()
     #form=TestBirthdayFrame()
-    form=TestLiuyaoPPFrame()
+    #form=TestLiuyaoPPFrame()
     #form=TestPaipanFrame()
+    form=TestLiuyaoFrame()
     form.show()
     app.exec_()

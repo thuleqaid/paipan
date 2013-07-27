@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sys
 sys.path.append('..')
 import re
@@ -21,7 +22,7 @@ class PaipanFrame(QFrame):
         self.bframe.setCbAdd(self.addPerson)
         self.bframe.setCbUpdate(self.hasPerson,self.updatePerson)
         self.bframe.setCbDelete(self.delPerson)
-        self.ui.tabWidget.addTab(self.bframe,'Birthday')
+        self.ui.tabWidget.addTab(self.bframe,u'生日')
         # load birthday database
         self.birth=birthdb.BirthDB()
         for row in self.birth.data(('name',)):

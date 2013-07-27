@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
-    <height>542</height>
+    <width>475</width>
+    <height>428</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Name</string>
+      <string>求测人</string>
      </property>
      <property name="buddy">
       <cstring>edit_name</cstring>
@@ -35,35 +35,6 @@
    </item>
    <item row="0" column="1">
     <widget class="QLineEdit" name="edit_name"/>
-   </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="title">
-      <string>Birthday</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QCalendarWidget" name="calendar"/>
-      </item>
-      <item>
-       <widget class="QTimeEdit" name="time">
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <property name="time">
-         <time>
-          <hour>12</hour>
-          <minute>0</minute>
-          <second>0</second>
-         </time>
-        </property>
-        <property name="displayFormat">
-         <string>hh:mm</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
    </item>
    <item row="4" column="0" colspan="2">
     <widget class="QGroupBox" name="groupBox_3">
@@ -74,17 +45,17 @@
       <item>
        <widget class="QPushButton" name="btnNow">
         <property name="text">
-         <string>Current Time</string>
+         <string>当前时间</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="btnPaipan">
         <property name="enabled">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="text">
-         <string>PaiPan</string>
+         <string>起卦</string>
         </property>
        </widget>
       </item>
@@ -94,7 +65,7 @@
    <item row="1" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Question</string>
+      <string>占事</string>
      </property>
      <property name="buddy">
       <cstring>edit_question</cstring>
@@ -107,27 +78,27 @@
    <item row="2" column="0" colspan="2">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Method</string>
+      <string>起卦方法</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="1" column="0">
        <widget class="QRadioButton" name="radio_gua">
         <property name="text">
-         <string>Gua code</string>
+         <string>卦码</string>
         </property>
        </widget>
       </item>
       <item row="5" column="0">
        <widget class="QRadioButton" name="radio_coin">
         <property name="text">
-         <string>Coins</string>
+         <string>铜钱</string>
         </property>
        </widget>
       </item>
       <item row="0" column="0">
        <widget class="QRadioButton" name="radio_number">
         <property name="text">
-         <string>Numbers</string>
+         <string>数字</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -166,6 +137,9 @@
            <property name="maxLength">
             <number>5</number>
            </property>
+           <property name="cursorPosition">
+            <number>0</number>
+           </property>
           </widget>
          </item>
          <item>
@@ -194,6 +168,9 @@
            <property name="maxLength">
             <number>5</number>
            </property>
+           <property name="cursorPosition">
+            <number>0</number>
+           </property>
           </widget>
          </item>
          <item>
@@ -221,6 +198,9 @@
            </property>
            <property name="maxLength">
             <number>5</number>
+           </property>
+           <property name="cursorPosition">
+            <number>0</number>
            </property>
           </widget>
          </item>
@@ -399,7 +379,7 @@
          <item row="0" column="0">
           <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>First Time</string>
+            <string>第一次</string>
            </property>
           </widget>
          </item>
@@ -433,14 +413,14 @@
          <item row="0" column="2">
           <widget class="QLabel" name="label_4">
            <property name="text">
-            <string>Second Time</string>
+            <string>第二次</string>
            </property>
           </widget>
          </item>
          <item row="0" column="4">
           <widget class="QLabel" name="label_5">
            <property name="text">
-            <string>Third Time</string>
+            <string>第三次</string>
            </property>
           </widget>
          </item>
@@ -501,7 +481,7 @@
          <item row="1" column="0">
           <widget class="QLabel" name="label_6">
            <property name="text">
-            <string>Forth Time</string>
+            <string>第四次</string>
            </property>
           </widget>
          </item>
@@ -535,7 +515,7 @@
          <item row="1" column="2">
           <widget class="QLabel" name="label_8">
            <property name="text">
-            <string>Fifth Time</string>
+            <string>第五次</string>
            </property>
           </widget>
          </item>
@@ -569,7 +549,7 @@
          <item row="1" column="4">
           <widget class="QLabel" name="label_7">
            <property name="text">
-            <string>Sixth Time</string>
+            <string>第六次</string>
            </property>
           </widget>
          </item>
@@ -606,6 +586,436 @@
      </layout>
     </widget>
    </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>起卦时间</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="radio_time1">
+        <property name="text">
+         <string>公历</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="radio_time2">
+        <property name="text">
+         <string>干支</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>月</string>
+        </property>
+        <property name="buddy">
+         <cstring>combo_month</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>日</string>
+        </property>
+        <property name="buddy">
+         <cstring>combo_day</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="combo_month">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <item>
+         <property name="text">
+          <string>子</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>丑</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>寅</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>卯</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>辰</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>巳</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>午</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>未</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>申</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>酉</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>戌</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>亥</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QComboBox" name="combo_day">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <item>
+         <property name="text">
+          <string>甲子</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>甲寅</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>甲辰</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>甲午</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>甲申</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>甲戌</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>乙丑</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>乙卯</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>乙巳</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>乙未</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>乙酉</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>乙亥</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>丙子</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>丙寅</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>丙辰</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>丙午</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>丙申</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>丙戌</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>丁丑</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>丁卯</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>丁巳</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>丁未</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>丁酉</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>丁亥</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>戊子</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>戊寅</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>戊辰</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>戊午</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>戊申</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>戊戌</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>己丑</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>己卯</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>己巳</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>己未</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>己酉</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>己亥</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>庚子</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>庚寅</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>庚辰</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>庚午</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>庚申</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>庚戌</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>辛丑</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>辛卯</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>辛巳</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>辛未</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>辛酉</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>辛亥</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>壬子</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>壬寅</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>壬辰</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>壬午</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>壬申</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>壬戌</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>癸丑</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>癸卯</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>癸巳</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>癸未</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>癸酉</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>癸亥</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="1" colspan="4">
+       <widget class="QDateTimeEdit" name="dateTimeEdit">
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="displayFormat">
+         <string>yyyy/MM/dd hh:mm:ss</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
   </layout>
  </widget>
  <tabstops>
@@ -614,8 +1024,6 @@
   <tabstop>radio_number</tabstop>
   <tabstop>radio_gua</tabstop>
   <tabstop>radio_coin</tabstop>
-  <tabstop>calendar</tabstop>
-  <tabstop>time</tabstop>
   <tabstop>btnNow</tabstop>
   <tabstop>btnPaipan</tabstop>
  </tabstops>
@@ -628,8 +1036,8 @@
    <slot>onBtnNow()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>80</x>
-     <y>557</y>
+     <x>102</x>
+     <y>405</y>
     </hint>
     <hint type="destinationlabel">
      <x>255</x>
@@ -644,8 +1052,8 @@
    <slot>onMethodToggled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>69</x>
-     <y>95</y>
+     <x>70</x>
+     <y>117</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -660,8 +1068,8 @@
    <slot>onMethodToggled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>38</x>
-     <y>126</y>
+     <x>60</x>
+     <y>165</y>
     </hint>
     <hint type="destinationlabel">
      <x>2</x>
@@ -676,8 +1084,8 @@
    <slot>onMethodToggled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>41</x>
-     <y>147</y>
+     <x>63</x>
+     <y>233</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -692,23 +1100,52 @@
    <slot>onBtnPaipan()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>166</x>
-     <y>548</y>
+     <x>407</x>
+     <y>405</y>
     </hint>
     <hint type="destinationlabel">
      <x>255</x>
-     <y>522</y>
+     <y>427</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radio_time1</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>LiuyaoPPFrame</receiver>
+   <slot>onTimeToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>35</x>
+     <y>313</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>8</x>
+     <y>281</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radio_time2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>LiuyaoPPFrame</receiver>
+   <slot>onTimeToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>59</x>
+     <y>343</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>7</x>
+     <y>338</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>onBtnPaipan()</slot>
-  <slot>onTimeChg(QTime)</slot>
-  <slot>onDateChg()</slot>
   <slot>onMethodToggled(bool)</slot>
-  <slot>onNameChg(QString)</slot>
   <slot>onBtnNow()</slot>
-  <slot>onQuestionChg(QString)</slot>
+  <slot>onTimeToggled(bool)</slot>
  </slots>
 </ui>
