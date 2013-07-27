@@ -84,8 +84,12 @@ class LiuYaoPaiPan(object):
                        Gua1=gua1,
                        Gua2=gua2)
         self.calcGua()
-    def display(self):
-        sep=" | "
+    def display(self,fmt={}):
+        sep=fmt.get('sep',' ')
+        yangyao=fmt.get('yangyao','-----')
+        yinyao=fmt.get('yinyao','-- --')
+        dongyao=fmt.get('dongyao','x')
+        jingyao=fmt.get('jingyao',' ')
         outs=''
         gua1=self.getData('Gua1')
         gua2=self.getData('Gua2')
@@ -147,13 +151,18 @@ class LiuYaoPaiPan(object):
             if lq3[5-i] not in lqset:
                 outs+="%s%s"%(LiuYaoPaiPan.Str_DiZhi[(zg3[5-i]-1)%12],LiuYaoPaiPan.Str_LiuQin[lq3[5-i]])
             else:
-                outs+="    "
+                if len(lqset)<5:
+                    outs+="    "
             outs+=sep
             # Ben Gua
             if yao1>0:
-                outs+='-----'
+                outs+=yangyao
             else:
-                outs+='-- --'
+                outs+=yinyao
+            if ((gua1^gua2)&(1<<i))>0:
+                outs+=dongyao
+            else:
+                outs+=jingyao
             outs+="%s%s"%(LiuYaoPaiPan.Str_DiZhi[(zg1[5-i]-1)%12],LiuYaoPaiPan.Str_LiuQin[lq1[5-i]])
             # ShiYing
             if shiying==6-i:
@@ -166,9 +175,9 @@ class LiuYaoPaiPan(object):
             if (i<3 and flg_up>0) or (i>=3 and flg_dn>0):
                 outs+=sep
                 if yao2>0:
-                    outs+='-----'
+                    outs+=yangyao
                 else:
-                    outs+='-- --'
+                    outs+=yinyao
                 outs+="%s%s"%(LiuYaoPaiPan.Str_DiZhi[(zg2[5-i]-1)%12],LiuYaoPaiPan.Str_LiuQin[lq2[5-i]])
             else:
                 outs+=sep.rstrip()
@@ -239,7 +248,6 @@ class LiuYaoPaiPan(object):
 
 if __name__ == '__main__':
     ly=LiuYaoPaiPan()
-    ly.paipanNow((1,2,1,3))
-    print ly.display()
-    print ly.getGuaNoFromTongQian((0,1,2,3,2,3))
-    print ly.getGuaNoFromNumber(3,7,10)
+    ly.paipanNow((2,2,1,3))
+    fmt={'sep':' '}
+    print ly.display(fmt)

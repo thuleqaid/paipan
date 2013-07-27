@@ -22,10 +22,7 @@ class BirthDB(dbbase.SingleTblDB):
         self._cursor.execute(stm)
         self._conn.commit()
     def delete(self,id):
-        stm="delete from %s where id=%d"%(self._table,id)
-        self._log.debug(stm)
-        self._cursor.execute(stm)
-        self._conn.commit()
+        return super(LiuyaoDB,self).delete('id',id)
 
 if __name__=='__main__':
     db=BirthDB()
