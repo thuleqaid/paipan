@@ -41,6 +41,14 @@ class DBBase(object):
         self._log.debug(stm)
         self._cursor.execute(stm)
         return tuple(self._cursor.fetchall())
+    def delete(self,table,key,value):
+        if isinstance(value,int) or isinstance(value,float):
+            stm="delete from %s where %s = %s"%(table,key,str(value))
+        else:
+            stm="delete from %s where %s = '%s'"%(table,key,value)
+        self._log.debug(stm)
+        self._cursor.execute(stm)
+        self._conn.commit()
     def _initloger(self,level,logfile):
         self._log=logging.getLogger(self.__class__.__name__)
         self._log.setLevel(level)
@@ -63,11 +71,13 @@ class SingleTblDB(DBBase):
         # create table self._table
         # commit
     def append(self,cols,values):
-        super(SingleTblDB,self).append(self._table,cols,values)
+        return super(SingleTblDB,self).append(self._table,cols,values)
     def data(self,klist=None):
         return super(SingleTblDB,self).data(self._table,klist)
     def find(self,col,value,klist=None):
         return super(SingleTblDB,self).find(self._table,col,value,klist)
+    def delete(self,col,value):
+        return super(SingleTblDB,self).delete(self._table,col,value)
 
 if __name__=='__main__':
     class DBTest(DBBase):
