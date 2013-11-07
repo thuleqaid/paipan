@@ -1,3 +1,8 @@
+Target Define:SiHuaNianGan
+Name:"四化年干"
+Tag:"VolatileInfo"
+Default Index:0
+Values:1,2,3,4,5,6,7,8,9,10
 Target Define:LunarNianGan
 Name:"生年干"
 Tag:"PersonInfo"
@@ -979,37 +984,37 @@ Data Value:
 3,3,5,5,7,7,9,9,11,11,1,1
 Target Define:HuaLu
 Name:"禄"
-Tag:"SiHua"
+Tag:"SiHua","VOLATILE"
 Default Index:0
 Values:"ZiWei","TianJi","TaiYang","WuQu","TianTong","LianZhen","TianFu","TaiYin","TanLang","JuMen","TianXiang","TianLiang","QiSha","PoJun","ZuoFu","YouBi","WenChang","WenQu"
 Target Calculate:HuaLu
-Input:LunarNianGan
+Input:SiHuaNianGan
 Data Value:
 "LianZhen","TianJi","TianTong","TaiYin","TanLang","WuQu","TaiYang","JuMen","TianLiang","PoJun"
 Target Define:HuaQuan
 Name:"权"
-Tag:"SiHua"
+Tag:"SiHua","VOLATILE"
 Default Index:0
 Values:"ZiWei","TianJi","TaiYang","WuQu","TianTong","LianZhen","TianFu","TaiYin","TanLang","JuMen","TianXiang","TianLiang","QiSha","PoJun","ZuoFu","YouBi","WenChang","WenQu"
 Target Calculate:HuaQuan
-Input:LunarNianGan
+Input:SiHuaNianGan
 Data Value:
 "PoJun","TianLiang","TianJi","TianTong","TaiYin","TanLang","WuQu","TaiYang","ZiWei","JuMen"
 Target Define:HuaKe
 Name:"科"
-Tag:"SiHua"
+Tag:"SiHua","VOLATILE"
 Default Index:0
 Values:"ZiWei","TianJi","TaiYang","WuQu","TianTong","LianZhen","TianFu","TaiYin","TanLang","JuMen","TianXiang","TianLiang","QiSha","PoJun","ZuoFu","YouBi","WenChang","WenQu"
 Target Calculate:HuaKe
-Input:LunarNianGan
+Input:SiHuaNianGan
 Data Value:
 "WuQu","ZiWei","WenChang","TianJi","YouBi","TianLiang","TaiYin","WenQu","ZuoFu","TaiYin"
 Target Define:HuaJi
 Name:"忌"
-Tag:"SiHua"
+Tag:"SiHua","VOLATILE"
 Default Index:0
 Values:"ZiWei","TianJi","TaiYang","WuQu","TianTong","LianZhen","TianFu","TaiYin","TanLang","JuMen","TianXiang","TianLiang","QiSha","PoJun","ZuoFu","YouBi","WenChang","WenQu"
 Target Calculate:HuaJi
-Input:LunarNianGan
+Input:SiHuaNianGan
 Data Value:
 "TaiYang","TaiYin","LianZhen","JuMen","TianJi","WenQu","TianTong","WenChang","WuQu","TanLang"

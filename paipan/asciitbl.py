@@ -1,6 +1,7 @@
 # --coding:utf8--
 import logging
 import binascii
+import re
 
 class AsciiTbl(object):
     BORDER_TL='┌'
@@ -17,6 +18,7 @@ class AsciiTbl(object):
     BORDER_S=' '
     def __init__(self,loglevel=logging.DEBUG,logfile=''):
         self._log=self._initLogger(loglevel,logfile)
+        self._ignoreptn=None
         self.setShape(4,4,1,1)
         self.setBorder(self.__class__.BORDER_TL,self.__class__.BORDER_TR,
                        self.__class__.BORDER_BL,self.__class__.BORDER_BR,
@@ -24,6 +26,8 @@ class AsciiTbl(object):
                        self.__class__.BORDER_HU,self.__class__.BORDER_HD,
                        self.__class__.BORDER_VL,self.__class__.BORDER_VR,
                        self.__class__.BORDER_HV,self.__class__.BORDER_S)
+    def setIgnorePattern(self,pattern):
+        self._ignoreptn=re.compile(pattern)
     def setBorder(self,topleft,topright,bottomleft,bottomright,hline,vline,hup,hdown,vleft,vright,cross,space):
         if self._checkBorderLen(space,topleft,topright,bottomleft,bottomright,hline,vline,hup,hdown,vleft,vright,cross):
             self._border={'tl':topleft,'tr':topright,
@@ -227,48 +231,141 @@ class AsciiTbl(object):
         return ch
     def _textlen(self,text,maxlen=0):
         # calculate text length (one japanese character = two ascii characters)
-        data=text
         self._log.debug("TextLen--Origin String:"+binascii.hexlify(text))
-        index=0
-        ret=0
-        length=len(data)
-        while index<length:
-            idata=ord(data[index])
-            if idata<=0x7f:
-                dlen=1
-                blen=1
-            elif 0xc0<=idata<=0xdf:
-                # 2 bytes character
-                dlen=2
-                blen=2
-            elif 0xe0<=idata<=0xef:
-                # 3 bytes character
-                dlen=2
-                blen=3
-            elif 0xf0<=idata<=0xf7:
-                # 4 bytes character
-                dlen=2
-                blen=4
-            elif 0xf8<=idata<=0xfb:
-                # 5 bytes character
-                dlen=2
-                blen=5
-            elif 0xfc<=idata<=0xfd:
-                # 6 bytes character
-                dlen=2
-                blen=6
-            ret+=dlen
-            index+=blen
-            if maxlen>0 and ret>maxlen:
-                ret-=dlen
-                index-=blen
-                newdata=data[0:index]
-                self._log.debug("TextLen--Cutted String:"+binascii.hexlify(newdata))
-                newtext=newdata
-                break
+        outs=self._patternsplit(text,self._split1,self._split2)
+        data=''
+        currentlen=0
+        flag=True
+        for index,item in enumerate(outs):
+            if item[0]==1:
+                # split done by self._split1
+                data+=item[1]
+            else:
+                if flag:
+                    if len(item[1])>1:
+                        ilen=2
+                    else:
+                        ilen=1
+                    if currentlen+ilen>maxlen and maxlen>0:
+                        flag=False
+                    else:
+                        currentlen+=ilen
+                        data+=item[1]
+        if not flag:
+            self._log.debug("TextLen--Cutted String:"+binascii.hexlify(data))
+        return currentlen,data
+    def transposeText(self,txtlist):
+        maxlen=3
+        outs=['']*maxlen
+        for txt in txtlist:
+            prefix=''
+            suffix=''
+            tmpout=self._patternsplit(txt,self._split1,self._split2)
+            index=0
+            flag=False
+            oindex=0
+            while index<len(tmpout):
+                if tmpout[index][0]==1:
+                    if not flag:
+                        prefix=tmpout[index][1]
+                        index2=index+1
+                        while index2<len(tmpout) and tmpout[index2][0]!=1:
+                            index2+=1
+                        else:
+                            if index2<len(tmpout):
+                                suffix=tmpout[index2][1]
+                            else:
+                                suffix=''
+                        flag=True
+                    else:
+                        flag=False
+                        prefix=''
+                        suffix=''
+                else:
+                    if len(tmpout[index][1])<2:
+                        if index<len(tmpout)-1:
+                            if len(tmpout[index+1][1])<2:
+                                data=tmpout[index][1]+tmpout[index+1][1]
+                                index+=1
+                            else:
+                                data=tmpout[index][1]+' '
+                        else:
+                            data=tmpout[index][1]+' '
+                    else:
+                        data=tmpout[index][1]
+                    outs[oindex]+=prefix+data+suffix
+                    oindex+=1
+                index+=1
+            while oindex<maxlen:
+                outs[oindex]+='  '
+                oindex+=1
+        return tuple(outs)
+    def _patternsplit(self,data,*funclist):
+        indata=[(-1,data)]
+        for idx,func in enumerate(funclist):
+            tmpout=[]
+            for item in indata:
+                if item[0]<0:
+                    tmpout.extend(func(item[1]))
+                else:
+                    tmpout.append(item)
+            indata=[]
+            for item in tmpout:
+                if item[0]==0:
+                    indata.append((idx+1,item[1]))
+                else:
+                    indata.append(item)
+        return tuple(indata)
+    def _split1(self,data):
+        outs=[]
+        if self._ignoreptn:
+            index=0
+            for m in self._ignoreptn.finditer(data):
+                if m.start()>index:
+                    outs.append((-1,data[index:m.start()]))
+                    outs.append((0,m.group(0)))
+                elif m.start()==index:
+                    outs.append((0,m.group(0)))
+                index=m.end()
+            if index<len(data):
+                outs.append((-1,data[index:]))
         else:
-            newtext=text
-        return ret,newtext
+            outs.append((-1,data))
+        return tuple(outs)
+    def _split2(self,data):
+        outs=[]
+        index=0
+        while index<len(data):
+            dlen,blen=self._utf8txtlen(data[index])
+            outs.append((0,data[index:index+blen]))
+            index+=blen
+        return tuple(outs)
+    def _utf8txtlen(self,bdata):
+        idata=ord(bdata)
+        if idata<=0x7f:
+            dlen=1
+            blen=1
+        elif 0xc0<=idata<=0xdf:
+            # 2 bytes character
+            dlen=2
+            blen=2
+        elif 0xe0<=idata<=0xef:
+            # 3 bytes character
+            dlen=2
+            blen=3
+        elif 0xf0<=idata<=0xf7:
+            # 4 bytes character
+            dlen=2
+            blen=4
+        elif 0xf8<=idata<=0xfb:
+            # 5 bytes character
+            dlen=2
+            blen=5
+        elif 0xfc<=idata<=0xfd:
+            # 6 bytes character
+            dlen=2
+            blen=6
+        return dlen,blen
 
 def output():
     ht=AsciiTbl(loglevel=logging.INFO)
@@ -289,4 +386,11 @@ def output():
     print outs
 
 if __name__ == '__main__':
-    output()
+    #output()
+    ht=AsciiTbl(loglevel=logging.CRITICAL)
+    ht.setIgnorePattern(r'<.+?>')
+    text='<font>hte</font>挨拶<br>大事'
+    print ht.transposeText((text,))
+    outs=ht._patternsplit(text,ht._split1,ht._split2)
+    for item in outs:
+        print item[0],item[1]

@@ -285,7 +285,10 @@ class RuleObj(RuleObjBase):
         return sorted(self._data['calculatable'].iterkeys())
     def _setValue(self,idname,idvalue):
         if idvalue!=self._data['values'][idname][1]:
-            self._data['values'][idname][0]=True    # value valid
+            if self.hasTagById(idname,'VOLATILE'):
+                self._data['values'][idname][0]=False    # value valid
+            else:
+                self._data['values'][idname][0]=True    # value valid
             self._data['values'][idname][1]=idvalue # set value
             self._log.debug("[SetValue] %s:%s"%(idname,repr(idvalue)))
     def _resetValues(self):
