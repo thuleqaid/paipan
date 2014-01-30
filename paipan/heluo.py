@@ -27,6 +27,37 @@ class HeLuoPaiPan(object):
             )
         self.calcGua(*cal)
 
+    def getDaTime(self,age):
+        if age<=0:
+            return ((),())
+        agecnt=age
+        agelow=1
+        # decide whether xian tian gua or hou tian gua?
+        info=self.getXianTianYun()
+        if agecnt>info[2]:
+            agecnt-=info[2]
+            agelow=info[2]+1
+            info=self.getHouTianYun()
+            if agecnt>info[2]:
+                return ((),())
+        gua=info[0]
+        yuantang=info[1]
+        yaocnt,yaosts=self.getBitSts(gua,6)
+
+        # decide yao
+        for i in range(6):
+            index=i+yuantang
+            if index>6:
+                index-=6
+            if agecnt<=6+3*yaosts[index-1]:
+                agehigh=agelow+6+3*yaosts[index-1]-1
+                break
+            else:
+                agecnt=agecnt-6-3*yaosts[index-1]
+                agelow+=6+3*yaosts[index-1]
+        info1=self.getNianTime(agelow)
+        info2=self.getNianTime(agehigh)
+        return (info1[0],info2[1])
     def getNianTime(self,age):
         if ((self.getData('ShengNian')-1984)%10+1)==self.getData('ShengNianGan'):
             year=self.getData('ShengNian')+age-1
